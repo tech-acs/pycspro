@@ -1,13 +1,13 @@
-# pycspro
-Python bindings for [Jsonic](https://github.com/rohanrhu/jsonic) JSON reader library.
+# pyCSPro
+Python library for parsing CSPro dictionaries and cases.
 
 ## Install
-PIP:
+pip:
 ```bash
 pip install pycspro
 ```
 
-Git:
+git:
 ```bash
 git clone https://github.com/amestsantim/pycspro
 cd pycspro
@@ -16,194 +16,107 @@ python setup.py install
 
 ## Usage
 
-### Import
+### DictionaryParser
+This class receives a raw dictionary text and parses it into a Python dictionary which we can then manipulate to acomplish various tasks.
+
+#### parse()
+Read dictionary file (.dcf) and returns a dictionary object, which is basically a nested Python dictionary.
 ```python
-import jsonic
+from pycspro import DictionaryParser
+
+raw_dictionary = open('CensusDictionary.dcf', 'r').read()
+dictionary_parser = DictionaryParser(raw_dict)
+parsed_dictionary = dictionary_parser.parse()
+print(json.dumps(parsed_dict, indent=4))
 ```
 
-### Types and Functions
-
-#### Function: from_file
-Read file and returns `Jsonic()` object.
-```python
-root = jsonic.from_file("file.json")
-```
-
-#### Type: Jsonic
-```python
-root = jsonic.Jsonic("[1, 2, 3, 4]")
-```
-
-##### Member: Jsonic.type
-Type member is useable for checking object and array types. Except object and array types, you will get regular python `str`, `float`, `bool` or `jsonic.Null` object.
-
-###### Type Checking
-###### Types
-`jsonic.TYPE_OBJECT`<br>
-`jsonic.TYPE_ARRAY`
-
-`Jsonic.type` is useable for objects or arrays. Object and array values returns as `Jsonic()` objects. Null values returns as `Jsonic.Null` object. Otherwise it returns as regular python types.
-
-##### Member: Jsonic.version
-Version of python-jsonic.
-
-##### Member: Jsonic.json
-JSON String.
-
-##### Type: Jsonic.Null
-JSON Null type.
-
-##### Method: root()
-Returns JSON root's value if `root.type` is not an array or object. Otherwise it returns None.
-```python
-root = jsonic.Jsonic("1234")
-print(root.root()) # 1234
-
-root = jsonic.Jsonic("\"foo\"")
-print(root.root()) # foo
-
-root = jsonic.Jsonic("true")
-print(root.root()) # True
-
-root = jsonic.Jsonic("null")
-print(root.root()) # jsonic.Null
-
-root = jsonic.Jsonic("{}")
-print(root.root()) # None
-print(root.type) # jsonic.TYPE_OBJECT
-
-root = jsonic.Jsonic("[]")
-print(root.root()) # None
-print(root.type) # jsonic.TYPE_ARRAY
-```
-
-#####  Method: len()
-Gets length of array.
-
-#####  Method: key(key)
-Returns the key's value.
-
-#####  Method: item(index)
-Returns item of an index on array.
-
-#### Method: iterItem(index=0)
-Iterates array item from last iterated item times index.
-
-```python
-root = jsonic.Jsonic("[1, 2, 3, 4]")
-print(array.iterItem()) # 1
-print(array.iterItem()) # 2
-print(array.iterItem(1)) # 4
-print(array.iterItem()) # None
-array.reset()
-print(array.iterItem()) # 1
-```
-
-#### Method: iterKey(key)
-Iterates object key from last iterated object.
-```python
-root = jsonic.Jsonic("{\"a\": 1, \"b\": 2, \"c\": 3, \"d\": 4}")
-print(array.iterKey("a")) # 1
-print(array.iterKey("b")) # 2
-print(array.iterKey("c")) # 3
-print(array.iterKey("b")) # None
-array.reset()
-print(array.iterKey("b")) # 2
-```
-
-#### Method: reset()
-Resets iteration current.
-
-## Example
-An example for reading JSON data
-
-```python
-import jsonic
-
-root = jsonic.from_file("heroes.json")
-
-print("Root Type: %d" % root.type)
-print("Squad: %s" % root.iterKey("squadName"))
-print("Hometown: %s" % root.iterKey("homeTown"))
-print("Formed: %d" % root.iterKey("formed"))
-print("Active: %d" % root.iterKey("active"))
-
-members = root.iterKey("members")
-
-print("Members: (%d total)" % members.len())
-while True:
-    member = members.iterItem()
-    if not member: break
-
-    name = member.iterKey("name")
-    age = member.iterKey("age")
-    powers = member.iterKey("powers")
-
-    print("\tName: %s" % name)
-    print("\tAge: %s" % age)
-    print("\tPowers (%d total):" % powers.len())
-    while True:
-        power = powers.iterItem()
-        if not power:break
-
-        print("\t\t%s" % power)
-
-    print()
-```
-
-Example JSON (heroes.json):
 ```json
 {
-    "squadName": "Super hero squad",
-    "homeTown": "Metro City",
-    "formed": 2016,
-    "secretBase": "Super tower",
-    "active": true,
-    "members": [
-    {
-        "name": "Molecule Man",
-        "age": 29,
-        "secretIdentity": "Dan Jukes",
-        "powers": [
-            "Radiation resistance",
-            "Turning tiny",
-            "Radiation blast"
-        ]
-    },
-    {
-        "name": "Madame Uppercut",
-        "age": 39,
-        "secretIdentity": "Jane Wilson",
-        "powers": [
-            "Million tonne punch",
-            "Damage resistance",
-            "Superhuman reflexes"
-        ]
-    },
-    {
-        "name": "Eternal Flame",
-        "age": 1000000,
-        "secretIdentity": "Unknown",
-        "powers": [
-            "Immortality",
-            "Heat Immunity",
-            "Inferno",
-            "Teleportation",
-            "Interdimensional travel"
-        ]
-    }
-    ]
-}
+    "Dictionary": {
+        "Name": "CEN2000",
+        "Label": "Popstan Census",
+        "Note": "",
+        "Version": "CSPro 7.2",
+        "RecordTypeStart": 1,
+        "RecordTypeLen": 1,
+        "Positions": "Relative",
+        "ZeroFill": true,
+        "DecimalChar": false,
+        "Languages": [],
+        "Relation": [],
+        "Level": {
+            "Name": "QUEST",
+            "Label": "Questionnaire",
+            "Note": "",
+            "IdItems": [
+                {
+                    "Name": "PROVINCE",
+                    "Label": "Province",
+                    "Note": "",
+                    "Len": 2,
+                    "ItemType": "Item",
+                    "DataType": "Numeric",
+                    "Occurrences": 1,
+                    "Decimal": 0,
+                    "DecimalChar": false,
+                    "ZeroFill": true,
+                    "OccurrenceLabel": [],
+                    "Start": 2,
+                    "ValueSets": [
+                        {
+                            "Name": "PROV_VS1",
+                            "Label": "Province",
+                            "Note": "",
+                            "Value": [
+                                "1;Artesia",
+                                "2;Copal",
+                                "3;Dari",
+                                "4;Eris",
+                                "5;Girda",
+                                "6;Hali",
+                                "7;Kerac",
+                                "8;Lacuna",
+                                "9;Laya",
+                                "10;Lira",
+                                "11;Matanga",
+                                "12;Patan",
+                                "13;Rift",
+                                "14;Terra",
+                                "15;Tumar"
+                            ]
+                        }
+                    ]
+                },
+                ...
+```
+
+#### get_column_labels()
+
+#### get_value_labels()
+
+### CaseParser
+Describe
+
+#### parse()
+Describe
+```python
+import pandas as pd
+from pycspro import CaseParser
+
+case_parser = CSProCaseParser(parsed_dictionary)
+parsed_cases = case_parser.parse(cases) # where cases is a list of CSPro cases
+# parsed_cases will be Python dictionary where the keys are the record names
+# and values would be a dictionary with columns as keys and column values as a Python list
 ```
 
 ## Syntax Checking
-This library does not check JSON syntax, so you may get `SIGSEGV` or maybe infinite loops for **corrupt JSONs**. Likewise in some cases of corrupt JSONs, it would work as properly.
+This library uses a finite state machine to check the syntax of dictionaries. However, in the current version, some simplifying assumptions were made.
+These are:
+Dictionaries are assumed to have only a single Level
+SubItems are not considered and will cause an error if present
 
 ## Performance
-There are some example JSONs and reading examples in `examples/` folder for profiling the performance.
-
-## C Library
-You can use [Jsonic](https://github.com/rohanrhu/jsonic) JSON reader library for C/C++.
+When reading and loading cases directly from CSWeb's MySQL database, you should be passing in to the CaseParser about 50,000 cases at a time and then converting the result into a Pandas DataFrame. In the next iteration, send in another 50,000 cases and on return, convert to a DataFrame and append to the previous DataFrame. That way, you can grow your DataFrame to a large size without consuming a lot of memory.
 
 ## License
 MIT

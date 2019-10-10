@@ -1,4 +1,4 @@
-import functools 
+import functools
 
 class CaseParser:
     def __init__(self, parsed_dictionary, cutting_mask = {}):
@@ -12,12 +12,12 @@ class CaseParser:
         self.cutters = self.make_cutters()
         
     def make_column_tuples(self, items):
-        return list(map(lambda x: tuple([
-                                            x['Name'], 
-                                            x['Start'], 
-                                            x['Len'],
-                                            x['DataType'],
-                                            x['DecimalChar']]), items))
+        return list(map(lambda item: tuple([
+                                            item['Name'], 
+                                            item['Start'], 
+                                            item['Len'],
+                                            item['DataType'],
+                                            item['DecimalChar']]), items))
         
     def make_iditems_columns(self):
         return self.make_column_tuples(self.parsed_dictionary['Dictionary']['Level']['IdItems'])

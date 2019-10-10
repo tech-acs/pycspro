@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pycspro",
-    version="0.0.1",
+    version="0.9.0",
     author="Nahom Tamerat",
     author_email="nahomt@amestsantim.com",
-    description="A small example package",
+    description="A Python library for parsing CSPro dictionaries and cases.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/amestsantim/pycspro",

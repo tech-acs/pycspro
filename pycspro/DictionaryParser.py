@@ -3,6 +3,7 @@ import configparser
 from collections import OrderedDict
 import json
 
+
 class MultiOrderedDict(OrderedDict):
     def __setitem__(self, key, value):
         if isinstance(value, list) and key in self:
@@ -11,6 +12,7 @@ class MultiOrderedDict(OrderedDict):
             super(OrderedDict, self).__setitem__(key, value)
     def keys(self):
         return super(OrderedDict, self).keys()
+
 
 class DictionaryBuilder:
     ATTRIBUTE_TYPES = {

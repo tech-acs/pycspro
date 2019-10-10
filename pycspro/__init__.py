@@ -1,4 +1,4 @@
 name = "pycspro"
 
-import DictionaryParser
-import CaseParser
+from ./DictionaryParser import DictionaryParser
+from ./CaseParser import CaseParser

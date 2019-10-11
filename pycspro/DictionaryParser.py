@@ -246,9 +246,9 @@ class DictionaryParser:
     
     def get_column_labels(self, record_name):
         if self.parsed_dictionary is not None:
-            result = list(filter(lambda r: r['Record']['Name'] == record_name, self.parsed_dictionary['Dictionary']['Level']['Records']))
-            if len(result) > 0:
-                items = result[0]['Record']['Items']
+            record = list(filter(lambda r: r['Name'] == record_name, self.parsed_dictionary['Dictionary']['Level']['Records']))
+            if len(record) > 0:
+                items = record[0]['Items']
                 return dict(list(
                     map(lambda i: (i['Name'], i['Label']), items)
                 ))
@@ -269,10 +269,10 @@ class DictionaryParser:
     
     def get_value_labels(self, record_name, desired_columns = None):
         if self.parsed_dictionary is not None:
-            result = list(filter(lambda r: r['Name'] == record_name, self.parsed_dictionary['Dictionary']['Level']['Records']))
+            record = list(filter(lambda r: r['Name'] == record_name, self.parsed_dictionary['Dictionary']['Level']['Records']))
             value_labels = {}
-            if len(result) > 0:
-                items = result[0]['Items']
+            if len(record) > 0:
+                items = record[0]['Items']
                 for item in items:
                     if desired_columns is not None and item['Name'] not in desired_columns:
                         continue

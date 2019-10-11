@@ -1,11 +1,16 @@
 import setuptools
+import pycspro
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+version = {}
+with open("version.py") as fp:
+    exec(fp.read(), version)
+
 setuptools.setup(
     name="pycspro",
-    version="0.9.0",
+    version=version['__version__'],
     author="Nahom Tamerat",
     author_email="nahomt@amestsantim.com",
     description="A Python library for parsing CSPro dictionaries and cases.",

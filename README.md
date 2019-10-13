@@ -152,6 +152,7 @@ for table_name, table in parsed_cases.items():
 
 ## Live Demo
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amestsantim/pycspro-example/master?filepath=Using%20pyCSPro.ipynb)
+
 There is a Jupyter Notebook on Binder (great project!) that you can play with, in a live environment (in your browser) and see how easy it is to use this library. Please, take it for a spin!
 
 ## Syntax Checking

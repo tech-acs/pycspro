@@ -150,6 +150,10 @@ for table_name, table in parsed_cases.items():
     pd.DataFrame.from_dict(table)
 ```
 
+## Live Demo
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amestsantim/pycspro-example/master?filepath=Using%20pyCSPro.ipynb)
+There is a Jupyter Notebook on Binder (great project!) that you can play with, in a live environment (in your browser) and see how easy it is to use this library. Please, take it for a spin!
+
 ## Syntax Checking
 This library uses a finite state machine to check the syntax of dictionaries. However, in the current version, some simplifying assumptions were made.
 These are:

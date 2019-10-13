@@ -285,13 +285,11 @@ class DictionaryParser:
                         for value in values:
                             if value.find(';') != -1:
                                 v, l = (value.split(';', maxsplit = 1))
-                                
-                                # Rethink this block 
-                                try:
-                                    dictified.append((self.cast(v, item), l))
-                                except:
-                                    pass
-                            
+                                if v.find(':') == -1:
+                                    try:
+                                        dictified.append((self.cast(v, item), l))
+                                    except:
+                                        pass
                             
                         value_labels[item['Name']] = dict(dictified)        
                 return value_labels

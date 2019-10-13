@@ -30,9 +30,14 @@ class CaseParser:
         # columns is [('Name', 'Start', 'Len', 'DataType', 'DecimalChar'), ...]
         caseid_column_cutter = self.make_caseid_column_cutter()
         cutters = {}
+        questionnaire = self.parsed_dictionary['Dictionary']['Level']['Name']
+        columns = self.iditems_columns
+        if questionnaire in self.cutting_mask:
+            desired_columns = self.cutting_mask[questionnaire]
+            columns = list(filter(lambda column: column[0] in desired_columns, columns))
         cutters[self.parsed_dictionary['Dictionary']['Level']['Name']] = {
             'marker': None,
-            'columns': caseid_column_cutter + self.iditems_columns,
+            'columns': caseid_column_cutter + columns,
         }
         for record in self.parsed_dictionary['Dictionary']['Level']['Records']:
             columns = self.make_column_tuples(record['Items'])
@@ -68,6 +73,8 @@ class CaseParser:
         }
         next(categories[self.main_table_name])
         for case in cases:
+            if case.strip() == '':
+                continue
             records = case.split('\n')
             categories[self.main_table_name].send(records[0])
             for record in records:

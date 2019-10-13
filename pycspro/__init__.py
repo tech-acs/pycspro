@@ -7,3 +7,5 @@ __all__ = [
     'DictionaryParser', 
     'CaseParser'
 ]
+
+__version__ = "1.0.2"

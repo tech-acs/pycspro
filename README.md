@@ -15,6 +15,10 @@ python setup.py install
 ```
 
 ## Usage
+The library is simple to use and has only two classes. DictionaryParser and CaseParser.
+There is also a medium article that explains, in considerable detail, how it works. You can find it here:
+
+[Working With CSPro Data Using Python (Pandas)](https://medium.com/@nahomt/working-with-cspro-data-using-python-pandas-9a6161b84ffa?sk=5e19e932f9090a21432c716aac0e7401)
 
 ### DictionaryParser
 This class receives a raw dictionary text and parses it into a Python dictionary which we can then manipulate to acomplish various tasks.

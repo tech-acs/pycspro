@@ -29,7 +29,7 @@ This method accepts the contents of a dictionary file (.dcf) and returns a dicti
 from pycspro import DictionaryParser
 
 raw_dictionary = open('CensusDictionary.dcf', 'r').read()
-dictionary_parser = DictionaryParser(raw_dict)
+dictionary_parser = DictionaryParser(raw_dictionary)
 parsed_dictionary = dictionary_parser.parse()
 print(json.dumps(parsed_dict, indent=4))
 ```

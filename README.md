@@ -31,7 +31,7 @@ from pycspro import DictionaryParser
 raw_dictionary = open('CensusDictionary.dcf', 'r').read()
 dictionary_parser = DictionaryParser(raw_dictionary)
 parsed_dictionary = dictionary_parser.parse()
-print(json.dumps(parsed_dict, indent=4))
+print(json.dumps(parsed_dictionary, indent=4))
 ```
 
 ```json

@@ -187,10 +187,8 @@ class DictionaryParser:
         # If present, remove BOM.
         # BOM is the character code (such as U+FEFF) at the beginning of a data stream
         # that is used to define the byte order and encoding form.
-        if raw_dictionary.startswith('\ufeff'):
-            self.raw_dictionary = raw_dictionary[1:]
-        else:
-            self.raw_dictionary = raw_dictionary
+        # https://www.tutorialspoint.com/Unicode-Byte-Order-Mark-BOM-character-in-HTML5-document
+        self.raw_dictionary = raw_dictionary.replace('\ufeff', '').replace('\u00ef', '').replace('\u00bb', '').replace('\u00bf', '')
         
     def parse(self):
         model = CSProDictionary()

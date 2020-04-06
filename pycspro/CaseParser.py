@@ -67,26 +67,29 @@ class CaseParser:
         return table
     
     def parse(self, cases):
-        tables = {}
-        categories = {
-            self.main_table_name: self.tables_builder(tables, self.main_table_name)
-        }
-        next(categories[self.main_table_name])
-        for case in cases:
-            if case.strip() == '':
-                continue
-            records = case.split('\n')
-            categories[self.main_table_name].send(records[0])
-            for record in records:
-                marker = record[(self.rec_type_start - 1) : (self.rec_type_start - 1) + self.rec_type_len]
-                record_name = list(filter(lambda k: self.cutters[k]['marker'] == marker, self.cutters))[0]
-                if categories.get(record_name, None) is None:
-                    categories[record_name] = self.tables_builder(tables, record_name)
-                    next(categories[record_name])
-                categories[record_name].send(record)
-        for _, category in categories.items():
-            category.send(None)
-        return tables
+        if isinstance(cases, list):
+            tables = {}
+            categories = {
+                self.main_table_name: self.tables_builder(tables, self.main_table_name)
+            }
+            next(categories[self.main_table_name])
+            for case in cases:
+                if case.strip() == '':
+                    continue
+                records = case.split('\n')
+                categories[self.main_table_name].send(records[0])
+                for record in records:
+                    marker = record[(self.rec_type_start - 1) : (self.rec_type_start - 1) + self.rec_type_len]
+                    record_name = list(filter(lambda k: self.cutters[k]['marker'] == marker, self.cutters))[0]
+                    if categories.get(record_name, None) is None:
+                        categories[record_name] = self.tables_builder(tables, record_name)
+                        next(categories[record_name])
+                    categories[record_name].send(record)
+            for _, category in categories.items():
+                category.send(None)
+            return tables
+        else:
+            return None
     
     def tables_builder(self, tables, name):
         while True:

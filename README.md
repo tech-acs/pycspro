@@ -128,7 +128,7 @@ person.replace(dictionary_parser.get_value_labels('PERSON'))
 ```
 
 ### CaseParser
-The CaseParser class is responsible for cutting up raw CSPro cases into tables by using a parsed dictionary (CaseParser). It produces a nested dictionary where each record is yet another dictionary. The resulting format is well suited to be converted into a Pandas Data Frame by using the from_dict method of pandas DataFrame class.
+The CaseParser class is responsible for cutting up raw CSPro cases into tables by using a parsed dictionary (DictionaryParser). It produces a nested dictionary where each record is yet another dictionary. The resulting format is well suited to be converted into a Pandas Data Frame by using the from_dict method of the pandas DataFrame class.
 
 During instantiation, you can also pass in a cutting_mask to the CaseParser class to specify only the columns (items) you are interested in. This can be useful when there are a large number of items in a record.
 ```python
@@ -148,6 +148,7 @@ from pycspro import CaseParser
 
 case_parser = CSProCaseParser(parsed_dictionary)
 parsed_cases = case_parser.parse(cases) # where cases is a list of CSPro cases
+
 # parsed_cases will be Python dictionary where the keys are the record names
 # and values would be a dictionary with columns as keys and column values as a Python list
 for table_name, table in parsed_cases.items():

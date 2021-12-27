@@ -227,17 +227,14 @@ class DictionaryParser:
         if self.raw_dictionary.find('\r\n\r\n') != -1: 
             section_separator = '\r\n\r\n' # but csweb db dictionaries have this
         sectioned_dictionary = self.raw_dictionary.split(section_separator)
-        
-        try:
-            for section in sectioned_dictionary:
-                section_parser.clear()
-                section_parser.read_string(section)
-                section_name = section_parser.sections()[0]
-                items = section_parser.items(section_name)
-                model.trigger(section_name, section_name, items)
-            model.trigger('EOF', None, None)
-        except Exception as err:
-            return "Parsing error. " + str(err)
+
+        for section in sectioned_dictionary:
+            section_parser.clear()
+            section_parser.read_string(section)
+            section_name = section_parser.sections()[0]
+            items = section_parser.items(section_name)
+            model.trigger(section_name, section_name, items)
+        model.trigger('EOF', None, None)
 
         self.parsed_dictionary = model.builder.tree if model.builder.is_built else None
         return self.parsed_dictionary

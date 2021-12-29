@@ -79,6 +79,11 @@ class DictionaryBuilder:
         section.update(attributes)
         self.tree['Dictionary'] = section
         
+    def languages_received(self, attributes):
+        section = {}
+        section.update(attributes)
+        self.tree['Dictionary']['Languages'] = section
+        
     def level_received(self, attributes):
         section = {
             'Name': '',
@@ -192,10 +197,12 @@ class DictionaryParser:
         
     def parse(self):
         model = CSProDictionary()
-        states = ['empty', 'dictionary_received', 'level_received', 'iditems_received', 'item_received', 
+        states = ['empty', 'dictionary_received', 'languages_received', 'level_received', 'iditems_received', 'item_received', 
                   'valueset_received', 'record_received', 'record_item_received', 'record_valueset_received', 'completed']
         transitions = [
             {'trigger': 'Dictionary', 'source': 'empty', 'dest': 'dictionary_received'},
+            {'trigger': 'Languages', 'source': 'dictionary_received', 'dest': 'languages_received'},
+            {'trigger': 'Level', 'source': 'languages_received', 'dest': 'level_received'},
             {'trigger': 'Level', 'source': 'dictionary_received', 'dest': 'level_received'},
             {'trigger': 'IdItems', 'source': 'level_received', 'dest': 'iditems_received'},
             {'trigger': 'Item', 'source': 'iditems_received', 'dest': 'item_received'},
